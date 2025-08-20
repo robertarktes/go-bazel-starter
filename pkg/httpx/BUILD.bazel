@@ -1,0 +1,18 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "httpx",
+    srcs = ["client.go"],
+    importpath = "github.com/robertarktes/go-bazel-starter/pkg/httpx",
+    visibility = ["//visibility:public"],
+    deps = ["//pkg/retry"],
+)
+
+go_test(
+    name = "httpx_test",
+    srcs = ["client_test.go"],
+    deps = [
+        ":httpx",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

@@ -1,0 +1,26 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_oci//oci:defs.bzl", "oci_image")
+
+go_binary(
+    name = "tool",
+    embed = [":tool_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "tool_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/robertarktes/go-bazel-starter/cmd/tool",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//pkg/httpx",
+        "//pkg/retry",
+    ],
+)
+
+oci_image(
+    name = "tool_image",
+    base = "@distroless_base",
+    entrypoint = ["/tool"],
+    tars = [":tool"],
+)

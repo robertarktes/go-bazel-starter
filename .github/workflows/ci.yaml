@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.8.5
+        with:
+          bazelisk-version: latest
+      - name: Cache Bazel
+        uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-bazel-${{ hashFiles('MODULE.bazel', '**/*.bzl') }}
+          path: ~/.cache/bazel
+      - run: bazel test //...
+      - run: bazel build //...
+      - name: Upload Artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: tool-binary
+          path: bazel-bin/cmd/tool/tool

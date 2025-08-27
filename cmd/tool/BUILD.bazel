@@ -13,14 +13,16 @@ go_library(
     importpath = "github.com/robertarktes/go-bazel-starter/cmd/tool",
     visibility = ["//visibility:private"],
     deps = [
+        "//pkg/cache",
         "//pkg/httpx",
         "//pkg/retry",
     ],
 )
 
-oci_image(
-    name = "tool_image",
-    base = "@distroless_base",
-    entrypoint = ["/tool"],
-    tars = [":tool"],
-)
+# OCI image target disabled due to registry access issues
+# oci_image(
+#     name = "tool_image",
+#     base = "@distroless_base",
+#     entrypoint = ["/tool"],
+#     tars = [":tool"],
+# )

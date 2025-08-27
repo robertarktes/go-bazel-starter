@@ -3,6 +3,7 @@ stages:
   - test
   - build
   - artifact
+  - redis-test
 
 variables:
   BAZEL_VERSION: "latest"
@@ -68,3 +69,26 @@ artifact:
   only:
     - main
     - tags
+
+redis-test:
+  stage: redis-test
+  image: redis:7-alpine
+  services:
+    - name: redis:7-alpine
+      alias: redis
+  variables:
+    REDIS_HOST: redis
+    REDIS_PORT: 6379
+  script:
+    - echo "Starting Redis test..."
+    - apk add --no-cache curl
+    - echo "Testing Redis connection..."
+    - redis-cli -h $REDIS_HOST -p $REDIS_PORT ping
+    - echo "Redis test completed successfully"
+  artifacts:
+    reports:
+      junit: redis-test-results.xml
+    expire_in: 1 week
+  only:
+    - main
+    - merge_requests

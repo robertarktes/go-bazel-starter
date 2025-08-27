@@ -27,7 +27,32 @@ go_deps.module(
     sum = "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
     version = "v3.0.1",
 )
-use_repo(go_deps, "com_github_stretchr_testify", "com_github_davecgh_go_spew", "com_github_pmezard_go_difflib", "in_gopkg_yaml_v3")
+go_deps.module(
+    path = "github.com/redis/go-redis/v9",
+    sum = "h1:k5iquqv27aBtnTm2tIkROUDp8JBXhXZIVu1InSgvovg=",
+    version = "v9.12.1",
+)
+go_deps.module(
+    path = "github.com/cespare/xxhash/v2",
+    sum = "h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=",
+    version = "v2.3.0",
+)
+go_deps.module(
+    path = "github.com/dgryski/go-rendezvous",
+    sum = "h1:lO4WD4F/rVNCu3HqELle0jiPLLBs70cWOduZpkS1E78=",
+    version = "v0.0.0-20200823014737-9f7001d12a5f",
+)
+go_deps.module(
+    path = "github.com/bsm/ginkgo/v2",
+    sum = "h1:4HvOPQ+QK0Q4Hp5Hcb3dBKMVrJ83bJzOfj4xqhd+nuI=",
+    version = "v2.12.0",
+)
+go_deps.module(
+    path = "github.com/bsm/gomega",
+    sum = "h1:4ieA6uqQrRR0ur5+I+n2dmm6Go3t6sF3zEKfSfc6tbU=",
+    version = "v1.27.10",
+)
+use_repo(go_deps, "com_github_cespare_xxhash_v2", "com_github_davecgh_go_spew", "com_github_dgryski_go_rendezvous", "com_github_pmezard_go_difflib", "com_github_redis_go_redis_v9", "com_github_stretchr_testify", "in_gopkg_yaml_v3", "com_github_bsm_ginkgo_v2", "com_github_bsm_gomega")
 
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 oci.pull(

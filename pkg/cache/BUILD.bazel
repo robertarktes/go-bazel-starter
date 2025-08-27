@@ -1,0 +1,21 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "cache",
+    srcs = ["redis.go"],
+    importpath = "github.com/robertarktes/go-bazel-starter/pkg/cache",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_redis_go_redis_v9//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "cache_test",
+    srcs = ["redis_test.go"],
+    embed = [":cache"],
+    deps = [
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)
